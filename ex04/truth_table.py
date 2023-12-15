@@ -1,4 +1,5 @@
 from copy import copy
+import string
 
 eval_dir = {
     "&": lambda a, b: a & b,
@@ -27,9 +28,15 @@ def eval_formula(formula: str) -> bool:
         return stack.pop()
     print("Formula should be a string bigger than 2 char")
 
-def print_truth_table(formula: str):
-    variables = list("".join(set(formula)).replace("&", "").replace("|", "").replace("^", "").replace(">", "").replace("=", "").replace("!", ""))
+def parsing(variables: list):
+    for v in variables:
+        if v not in list(string.ascii_uppercase):
+            exit()
     variables.sort()
+    return variables
+
+def print_truth_table(formula: str):
+    variables = parsing(list("".join(set(formula)).replace("&", "").replace("|", "").replace("^", "").replace(">", "").replace("=", "").replace("!", "")))
     dir = {elem: 0 for elem in variables}
     for v in dir:
         print("|",v, end=" ")

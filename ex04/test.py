@@ -6,3 +6,5 @@ if __name__=="__main__":
     print_truth_table("AB|C|")
     print()
     print_truth_table("AB=C|D&")
+    print()
+    print_truth_table("AB|C|3")
