@@ -31,7 +31,6 @@ def negation_normal_form(formula: str) -> bool:
             else:
                 print("bad character in formula: ", elem)
                 return
-            # print(stack)
         return stack.pop()
     return formula
 
@@ -48,6 +47,5 @@ def negative_form(formula: str, negate: bool) -> str:
                     stack.append(n_dir[elem](negative_form(left, 0), right))
                 else:
                     stack.append(left + "!" + right + "!" + elem)
-            # print(stack)
         return stack.pop()
     return formula + "!"
