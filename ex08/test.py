@@ -1,5 +1,8 @@
 from powerset import powerset
+from random import sample
 
 if __name__=="__main__":
-    lst = [0,1,2,3]
-    print(powerset(lst))
+    lst = [sample(range(1000), 5) for _ in range(5)]
+    pwset = powerset(lst)
+    for x in pwset:
+        print(x)
