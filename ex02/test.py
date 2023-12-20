@@ -1,13 +1,7 @@
-from grey_code import grey_code
+from gray_code import gray_code
+from graycode import gray_code as gc
+from random import randrange
 
 if __name__=="__main__":
-    print(grey_code(1))
-    print(grey_code(2))
-    print(grey_code(3))
-    print(grey_code(4))
-    print(grey_code(5))
-    print(grey_code(6))
-    print(grey_code(7))
-    print(grey_code(8))
-    print(grey_code(9))
-    print(grey_code(10))
+    for x in [randrange(100) for _ in range(10)]:
+        print(f"{x:2} = {gray_code(x):3} | {gc.tc_to_gray_code(x)}")
