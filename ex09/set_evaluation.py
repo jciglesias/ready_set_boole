@@ -12,8 +12,7 @@ truth = {
 def parsing(variables: list):
     for v in variables:
         if v not in ascii_uppercase:
-            print("Not valid formula")
-            exit()
+            exit("Not valid formula")
     variables.sort()
     return variables
 
@@ -26,13 +25,15 @@ def eval_set(formula: str, sets: list) -> list:
             if elem in ascii_uppercase:
                 stack.append(var[elem])
             elif elem in "&|>=":
-                right = stack.pop()
-                left = stack.pop()
+                try:
+                    right = stack.pop()
+                    left = stack.pop()
+                except:
+                    exit("Bad formula")
                 stack.append(truth[elem](left, right))
             elif elem == "!":
                 stack.append(truth[elem](stack.pop()))
             else:
-                print("Bad character in formula: ", elem)
-                return
+                exit(f"Bad character in formula: {elem}")
         return stack.pop()
-    return
+    exit("Formula must be a string and sets a list")
