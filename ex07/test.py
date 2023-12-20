@@ -9,3 +9,5 @@ if __name__=="__main__":
     # false
     print(sat("AA^"))
     # false
+    print(sat("A!"))
+    # true

@@ -1,5 +1,5 @@
 from copy import copy
-import string
+from string import ascii_uppercase
 
 eval_dir = {
     "&": lambda a, b: a & b,
@@ -11,27 +11,29 @@ eval_dir = {
 }
 
 def eval_formula(formula: str) -> bool:
-    if isinstance(formula, str) and len(formula) > 2:
+    if isinstance(formula, str):
         stack = []
         for elem in formula:
             if elem in "01":
                 stack.append(bool(int(elem)))
             elif elem in "&|^>=":
-                right = stack.pop()
-                left = stack.pop()
-                stack.append(eval_dir[elem](right, left))
+                try:
+                    right = stack.pop()
+                    left = stack.pop()
+                except:
+                    exit("Bad formula")
+                stack.append(eval_dir[elem](left, right))
             elif elem == "!":
                 stack.append(eval_dir[elem](stack.pop()))
             else:
-                print("bad character in formula: ", elem)
-                return 0
+                exit(f"bad character in formula: {elem}")
         return stack.pop()
-    return 0
+    exit("Input must be a string")
 
 def parsing(variables: list):
     for v in variables:
-        if v not in list(string.ascii_uppercase):
-            exit()
+        if v not in ascii_uppercase:
+            exit(f"Bad element in formula: {v}")
     variables.sort()
     return variables
 
