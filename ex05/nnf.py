@@ -17,20 +17,22 @@ eval_dir = {
 }
 
 def negation_normal_form(formula: str) -> bool:
-    if isinstance(formula, str) and len(formula) > 2:
+    if isinstance(formula, str):
         stack = []
         for elem in formula:
             if elem in ascii_uppercase:
                 stack.append(elem)
             elif elem in "&|^>=":
                 right = stack.pop()
-                left = stack.pop()
+                try:
+                    left = stack.pop()
+                except:
+                    exit("Bad formula")
                 stack.append(eval_dir[elem](negation_normal_form(left), right))
             elif elem == "!":
                 stack.append(negative_form(stack.pop(), 1))
             else:
-                print("bad character in formula: ", elem)
-                return
+                exit(f"bad character in formula: {elem}")
         return stack.pop()
     return formula
 
