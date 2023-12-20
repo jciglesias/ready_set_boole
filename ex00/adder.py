@@ -1,5 +1,8 @@
-def adder(a, b):
-    if isinstance(a, int) and isinstance(b, int):
+from copy import copy
+
+def adder(x, y):
+    if isinstance(x, int) and isinstance(y, int) and x >= 0 and y >= 0:
+        a, b = copy(x), copy(y)
         while a:
             c = a & b
             b = b ^ a
