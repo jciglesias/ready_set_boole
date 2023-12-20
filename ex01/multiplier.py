@@ -1,9 +1,8 @@
 from copy import copy
 
 def adder(x, y):
-    a = copy(x)
-    b = copy(y)
-    if isinstance(a, int) and isinstance(b, int):
+    if isinstance(x, int) and isinstance(y, int) and x >= 0 and y >= 0:
+        a, b = copy(x), copy(y)
         while a:
             c = a & b
             b = b ^ a
@@ -12,8 +11,9 @@ def adder(x, y):
     return
 
 def multiplier(x, b):
-    i, a = 0, 0
-    while i < b:
-        a = adder(a, x)
-        i = adder(i, 1)
-    return a
+    if isinstance(x, int) and isinstance(b, int) and x >= 0 and b >= 0:
+        a = 0
+        for _ in range(b):
+            a = adder(a, x)
+        return a
+    return

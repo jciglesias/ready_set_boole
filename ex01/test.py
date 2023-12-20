@@ -1,11 +1,6 @@
 from multiplier import multiplier
+from random import randrange
 
 if __name__=="__main__":
-    print(multiplier(2, 8))
-    print(multiplier(3, 8))
-    print(multiplier(4, 8))
-    print(multiplier(5, 8))
-    print(multiplier(6, 8))
-    print(multiplier(7, 8))
-    print(multiplier(8, 8))
-    print(multiplier(9, 8))
+    for x, y in [(randrange(100), randrange(100)) for _ in range(10)]:
+        print(f"{x:2} x {y:2} = {multiplier(x,y)}\t| {x * y}")
