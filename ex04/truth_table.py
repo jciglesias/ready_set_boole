@@ -11,27 +11,29 @@ eval_dir = {
 }
 
 def eval_formula(formula: str) -> bool:
-    if isinstance(formula, str) and len(formula) > 2:
+    if isinstance(formula, str):
         stack = []
         for elem in formula:
             if elem in "01":
                 stack.append(bool(int(elem)))
             elif elem in "&|^>=":
                 right = stack.pop()
-                left = stack.pop()
-                stack.append(eval_dir[elem](right, left))
+                try:
+                    left = stack.pop()
+                except:
+                    exit("Bad formula")
+                stack.append(eval_dir[elem](left, right))
             elif elem == "!":
                 stack.append(eval_dir[elem](stack.pop()))
             else:
-                print("bad character in formula: ", elem)
-                return
+                exit(f"Bad character in formula: {elem}")
         return stack.pop()
-    print("Formula should be a string bigger than 2 char")
+    return
 
 def parsing(variables: list):
     for v in variables:
         if v not in list(string.ascii_uppercase):
-            exit()
+            exit(f"Bad character in formula: {v}")
     variables.sort()
     return variables
 
