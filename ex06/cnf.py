@@ -17,14 +17,17 @@ eval_dir = {
 }
 
 def conjunctive_normal_form(formula: str) -> str:
-    if isinstance(formula, str) and len(formula) > 2:
+    if isinstance(formula, str):
         stack = []
         for elem in formula:
             if elem in ascii_uppercase:
                 stack.append(elem)
             elif elem in "&|^>=":
-                right = stack.pop()
-                left = stack.pop()
+                try:
+                    right = stack.pop()
+                    left = stack.pop()
+                except:
+                    exit("Bad formula")
                 if left[-1] != elem:
                     stack.append(eval_dir[elem](left, right))
                 else:
@@ -34,8 +37,7 @@ def conjunctive_normal_form(formula: str) -> str:
             elif elem == "!":
                 stack.append(negative_form(stack.pop(), 1))
             else:
-                print("bad character in formula: ", elem)
-                return
+                exit(f"bad character in formula: {elem}")
         return stack.pop()
     return formula
 

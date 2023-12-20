@@ -14,8 +14,8 @@ def eval_formula(formula: str) -> bool:
             if elem in "01":
                 stack.append(bool(int(elem)))
             elif elem in "&|^>=":
-                right = stack.pop()
                 try:
+                    right = stack.pop()
                     left = stack.pop()
                 except:
                     exit("Bad formula")

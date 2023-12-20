@@ -23,8 +23,8 @@ def negation_normal_form(formula: str) -> bool:
             if elem in ascii_uppercase:
                 stack.append(elem)
             elif elem in "&|^>=":
-                right = stack.pop()
                 try:
+                    right = stack.pop()
                     left = stack.pop()
                 except:
                     exit("Bad formula")
