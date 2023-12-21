@@ -10,10 +10,14 @@ def adder(x, y):
         return b
     return
 
-def multiplier(x, b):
-    if isinstance(x, int) and isinstance(b, int) and x >= 0 and b >= 0:
-        a = 0
-        for _ in range(b):
-            a = adder(a, x)
-        return a
+def multiplier(a, b):
+    if isinstance(a, int) and isinstance(b, int) and a >= 0 and b >= 0:
+        x,y = copy(a), copy(b)
+        z = 0
+        while y:
+            if y & 1:
+                z = adder(z, x)
+            x <<= 1
+            y >>= 1
+        return z
     return
