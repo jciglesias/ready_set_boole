@@ -20,28 +20,32 @@ eval_dir = {
 
 def negation_normal_form(f: str) -> str:
     root = create_tree(f)
-    print_tree(tree_eval(root))
+    r = tree_eval(root)
+    print(r)
+    print_tree(r)
     print()
 
 def tree_eval(root: bt.Node) -> bt.Node:
     if root:
         root.left = tree_eval(root.left)
+        root.right = tree_eval(root.right)
         if root.value in "&|^=>":
             if root.left.value in ascii_uppercase and root.right.value in ascii_uppercase:
                 return create_tree(eval_dir[root.value](root.left.value, root.right.value))
         elif root.value == "!":
-            return negation_eval(root.left)
+            return negation_eval(root)
     return root
     
 
 def negation_eval(root: bt.Node) -> bt.Node:
     if root:
         root.left = negation_eval(root.left)
+        root.right = negation_eval(root.right)
         if root.value in "&|^=>":
             if root.left.value in ascii_uppercase and root.right.value in ascii_uppercase:
                 return create_tree(n_dir[root.value](root.left.value, root.right.value))
         elif root.value == "!":
-            return negation_eval(root.left)
+            return root
     return root
 
 def print_tree(root: bt.Node):
