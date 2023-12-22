@@ -40,7 +40,7 @@ def tree_eval(root: bt.Node) -> bt.Node:
 def negation_eval(root: bt.Node) -> bt.Node:
     if root:
         root.left = negation_eval(root.left)
-        root.right = negation_eval(root.right)
+        root.right = negation_eval(root.right   )
         if root.value in "&|^=>":
             if root.left.value in ascii_uppercase and root.right.value in ascii_uppercase:
                 return create_tree(n_dir[root.value](root.left.value, root.right.value))
