@@ -1,5 +1,4 @@
 from string import ascii_uppercase
-from copy import deepcopy
 from binarydoublechainedtree import BinaryDoubleChainedTree as bt
 
 n_dir = {
@@ -10,7 +9,7 @@ n_dir = {
     # Exclusive disjunction (xor) ¬(A ⊻ B) ↔ ((A ∧ B) ∨ (¬A ∧ ¬B))
     "^": lambda a,b: create_node(create_node(a,"&",b),"|",create_node(negative_node(a),"&",negative_node(b))),
     # Material condition ¬(A ⇒ B) ⇔ (A ∧ ¬B)
-    ">": lambda a,b: create_node(negative_node(a), "|", b),
+    ">": lambda a,b: create_node(a, "&", negative_node(b)),
     # Logical equivalence ¬(A ⇔ B) ⇔ ((¬A ∨ ¬B) ∧ (A ∨ B))
     "=": lambda a, b: create_node(create_node(negative_node(a),"|",negative_node(b)),"&",create_node(a,"|",b)),
 }
@@ -31,6 +30,7 @@ eval_dir = {
 def negation_normal_form(f: str) -> str:
     root = create_tree(f)
     r = tree_eval(root)
+    print(r)
     line = []
     print_tree(r, line)
     return(''.join(line))
@@ -40,19 +40,10 @@ def tree_eval(root: bt) -> bt:
  
     while current:
         if current.value in "|&>^=":
-            if current.up == None:
-                tmp = eval_dir[current.value](current.left, current.right)
-                current.value = tmp.value
-                current.left = tmp.left
-                current.right = tmp.right
-            else:
-                tmp = eval_dir[current.value](current.left, current.right)
-                tmp.up = current.up
-                if current.up.left == current:
-                    current.up.left = tmp
-                else:
-                    current.up.right = tmp
-                current = tmp
+            tmp = eval_dir[current.value](current.left, current.right)
+            current.value = tmp.value
+            current.left = tmp.left
+            current.right = tmp.right
             if current.right != None:
                 current.right = tree_eval(current.right)
                 current.right.up = current
