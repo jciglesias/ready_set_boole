@@ -1,5 +1,6 @@
 from string import ascii_uppercase
 from binarydoublechainedtree import BinaryDoubleChainedTree as bt
+from binarydoublechainedtree import print_tree, create_node, negative_node,create_tree
 
 n_dir = {
     # Disjunction (and) ¬(A ∧ B) ↔ (¬A ∨ ¬B)
@@ -61,50 +62,3 @@ def negative_eval(root: bt):
         return root.left
     else:
         return n_dir[root.value](root.left, root.right)
-
-def create_node(left: bt, value, right: bt):
-    new_node = bt(value)
-    left.up = new_node
-    new_node.left = left
-    right.up = new_node
-    new_node.right = right
-    return new_node
-
-def negative_node(left: bt):
-    new_node = bt("!")
-    left.up = new_node
-    new_node.left = left
-    return new_node
-
-def print_tree(root: bt, line: list):
-    if root:
-        print_tree(root.left, line)
-        if root.value in ascii_uppercase or root.value == "!":
-            line.append(root.value)
-        elif root.value in "&^|=>":
-            print_tree(root.right, line)
-            line.append(root.value)
-
-def create_tree(formula: str):
-    if isinstance(formula, str):
-        stack = []
-        for elem in formula:
-            node = bt(elem)
-            if elem in "&|^>=":
-                try:
-                    right = stack.pop()
-                    left = stack.pop()
-                except:
-                    exit("Bad formula")
-                left.up = node
-                right.up = node
-                node.left = left
-                node.right = right
-            elif elem == "!":
-                node.left = stack.pop()
-                node.left.up = node
-            elif elem not in ascii_uppercase:
-                exit(f"bad character in formula: {elem}")
-            stack.append(node)
-        return stack.pop()
-    return
