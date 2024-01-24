@@ -1,12 +1,24 @@
 from nnf import negation_normal_form
+from truth_table import print_truth_table
 
-# print(negation_normal_form("A") == "A")
-# print(negation_normal_form("A!") == "A!")
-# print(negation_normal_form("AB&!") == "A!B!|")
-# print(negation_normal_form("AB|!") == "A!B!&")
-# print(negation_normal_form("AB>!") == "AB!&")
-# print(negation_normal_form("AB=!") == "A!B!|AB|&")
-# print(negation_normal_form("AB>") == "A!B|")
-# print(negation_normal_form("AB=") == "AB&A!B!&|")
-# print(negation_normal_form("AB|C&!") == "A!B!&C!|")
-print(negation_normal_form("ABC||!"))
+def compare_tables(nf):
+    nnf = negation_normal_form(nf)
+    print(f"\n{nf} == {nnf}")
+    print_truth_table(nnf)
+    print()
+    print_truth_table(nf)
+
+if __name__=="__main__":
+    compare_tables("A")
+    compare_tables("A!")
+    compare_tables("AB&!")
+    compare_tables("AB|!")
+    compare_tables("AB>!")
+    compare_tables("AB=!")
+    compare_tables("AB>")
+    compare_tables("AB=")
+    compare_tables("AB|C&!")
+    compare_tables("ABC||!")
+    compare_tables("ABC&|!")
+    compare_tables("ABC^^")
+    compare_tables("ABC>>")
