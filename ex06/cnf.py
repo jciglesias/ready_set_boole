@@ -30,12 +30,11 @@ eval_dir = {
 
 def conjunctive_normal_form(f: str) -> str:
     root = create_tree(f)
-    r = tree_eval(root)
+    tree_eval(root)
+    cnf_tree(root)
     line = []
-    print_tree(r, line)
-    cnf_line(line)
-    # print(line)
-    return(''.join(line))
+    print_tree(root, line)
+    return("".join(line))
 
 def tree_eval(root: bt) -> bt:
     current = root
@@ -65,17 +64,21 @@ def negative_eval(root: bt):
     else:
         return n_dir[root.value](root.left, root.right)
     
-def cnf_line(line: list):
-    size = len(line) - 1
-    for a in range(size, -1, -1):
-        if line[a] in "|&>^=":
-            move_op(line, a)
+def cnf_tree(root: bt):
+    if root:
+        cnf_tree(root.left)
+        cnf_tree(root.right)
+        if root.value in "&|" and root.up and root.up.value in "&|":
+            cnf_rearrange(root.up)
 
-def move_op(line: list, a):
-    for i in range(a + 1, len(line)):
-        if line[i] in "|&>^=" and line[i] != line[a]:
-            break
-        elif line[i] == line[a]:
-            line.insert(i, line[a])
-            line.pop(a)
-            break
+def cnf_rearrange(root: bt):
+    if root.value == "|" and ((root.left and root.left.value == "&") or (root.right and root.right.value == "&")):
+        if root.left and root.left.value == "&":
+            pass # A | (B & C) = (A | B) & (A | C)
+        if root.right and root.right.value == "&":
+            pass # A | (B & C) = (A | B) & (A | C)
+    elif root.value == "&" and ((root.left and root.left.value == "|") or (root.right and root.right.value == "|")):
+        if root.left and root.left.value == "|":
+            pass # A & (B | C) = (A & B) | (A & C)
+        if root.right and root.right.value == "|":
+            pass

@@ -9,19 +9,21 @@ def compare_tables(nf):
     print_truth_table(nf)
 
 if __name__=="__main__":
-    compare_tables("A")
-    compare_tables("A!")
-    compare_tables("AB&!")# A!B!|
-    compare_tables("AB|!")# A!B!&
-    compare_tables("AB>!")
-    compare_tables("AB=!")
-    compare_tables("AB>")
-    compare_tables("AB=")
-    compare_tables("AB|C&") # AB|C&
-    compare_tables("ABC||!")
-    compare_tables("ABC&|!")
-    compare_tables("ABC^^")
-    compare_tables("ABC>>")
+    # compare_tables("A")
+    # compare_tables("A!")
+    # compare_tables("AB&!")# A!B!|
+    # compare_tables("AB|!")# A!B!&
+    # compare_tables("AB>!")
+    # compare_tables("AB=!")
+    # compare_tables("AB>")
+    # compare_tables("AB=")
+    # compare_tables("AB|C&") # AB|C&
+    # compare_tables("ABC||!")
+    # compare_tables("ABC&|!")
+    # compare_tables("ABC^^")
+    # compare_tables("ABC>>")
+    compare_tables("ABCD&|&") # ABC|BD|&&
+    # compare_tables("ABCD|||")
 
     
     # print(conjunctive_normal_form("AB|C|D|"))

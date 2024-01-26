@@ -37,10 +37,10 @@ def create_tree(formula: str):
 def print_tree(root: Node, line: list):
     if root:
         print_tree(root.left, line)
+        print_tree(root.right, line)
         if root.value in ascii_uppercase or root.value == "!":
             line.append(root.value)
         elif root.value in "&^|=>":
-            print_tree(root.right, line)
             line.append(root.value)
 
 def create_node(left: BinaryDoubleChainedTree, value, right: BinaryDoubleChainedTree):
