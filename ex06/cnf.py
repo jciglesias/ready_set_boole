@@ -32,6 +32,7 @@ def conjunctive_normal_form(f: str) -> str:
     root = create_tree(f)
     tree_eval(root)
     cnf_tree(root)
+    cnf_tree(root)
     line = []
     print_tree(root, line)
     return("".join(line))
@@ -68,17 +69,45 @@ def cnf_tree(root: bt):
     if root:
         cnf_tree(root.left)
         cnf_tree(root.right)
-        if root.value in "&|" and root.up and root.up.value in "&|":
-            cnf_rearrange(root.up)
+        if root.value in "&|":
+            cnf_rearrange(root)
 
 def cnf_rearrange(root: bt):
-    if root.value == "|" and ((root.left and root.left.value == "&") or (root.right and root.right.value == "&")):
-        if root.left and root.left.value == "&":
-            pass # A | (B & C) = (A | B) & (A | C)
-        if root.right and root.right.value == "&":
-            pass # A | (B & C) = (A | B) & (A | C)
-    elif root.value == "&" and ((root.left and root.left.value == "|") or (root.right and root.right.value == "|")):
-        if root.left and root.left.value == "|":
-            pass # A & (B | C) = (A & B) | (A & C)
-        if root.right and root.right.value == "|":
-            pass
+    if root.value == "|":
+        if root.left and root.left.value == "&" and (not root.right or root.right.value not in "|&"):
+            # (B & C) | A = (A | B) & (A | C)
+            node_swap(root, root.right, root.left.left, root.left.right, 0)
+        elif root.left and root.left.value == "|":
+            a = root.right
+            c = root.left.right
+            root.left = root.left.left
+            root.right = create_node(c,"|", a)
+            root.left.up = root
+            root.right.up = root
+        elif root.right and root.right.value == "&" and (not root.left or root.left.value not in "|&"):
+            # A | (B & C) = (A | B) & (A | C)
+            node_swap(root, root.left, root.right.left, root.right.right, 1)
+    elif root.value == "&":
+        if root.left and root.left.value == "|" and (not root.right or root.right.value not in "|&"):
+            # A & (B | C) = (A & B) | (A & C)
+            node_swap(root, root.right, root.left.left, root.left.right, 0)
+        elif root.left and root.left.value == "&":
+            a = root.right
+            b:bt = root.left.left
+            c = root.left.right
+            root.left = b
+            root.right = create_node(c,"&", a)
+            root.left.up = root
+            root.right.up = root
+        elif root.right and root.right.value == "|" and (not root.left or root.left.value not in "|&"):
+            # A & (B | C) = (A & B) | (A & C)
+            node_swap(root, root.left, root.right.left, root.right.right, 0)
+
+def node_swap(root: bt, a: bt, b: bt, c: bt, value):
+    op = ["|", "&"]
+    root.value = op[value]
+    root.left = create_node(a, op[not value], b)
+    root.right = create_node(a, op[not value], c)
+    root.left.up = root
+    root.right.up = root
+

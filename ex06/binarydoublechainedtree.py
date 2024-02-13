@@ -45,9 +45,11 @@ def print_tree(root: Node, line: list):
 
 def create_node(left: BinaryDoubleChainedTree, value, right: BinaryDoubleChainedTree):
     new_node = BinaryDoubleChainedTree(value)
-    left.up = new_node
+    if left:
+        left.up = new_node
     new_node.left = left
-    right.up = new_node
+    if right:
+        right.up = new_node
     new_node.right = right
     return new_node
 

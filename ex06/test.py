@@ -9,29 +9,28 @@ def compare_tables(nf):
     print_truth_table(nf)
 
 if __name__=="__main__":
-    # compare_tables("A")
-    # compare_tables("A!")
-    # compare_tables("AB&!")# A!B!|
-    # compare_tables("AB|!")# A!B!&
-    # compare_tables("AB>!")
-    # compare_tables("AB=!")
+    # Basic tests
+    compare_tables("A")
+    compare_tables("A!")
+    compare_tables("AB&!") # A!B!|
+    compare_tables("AB|!") # A!B!&
+    compare_tables("AB>!")
+    compare_tables("AB=!")
+    
+    # Composition
+    compare_tables("ABC||")
+    compare_tables("ABC||!")
+    compare_tables("ABC|&")
+    compare_tables("ABC&|")
+    compare_tables("ABC&|!")
+    compare_tables("ABC^^")
+    compare_tables("ABC>>")
+   
     # compare_tables("AB>")
     # compare_tables("AB=")
     # compare_tables("AB|C&") # AB|C&
-    # compare_tables("ABC||!")
-    # compare_tables("ABC&|!")
-    # compare_tables("ABC^^")
-    # compare_tables("ABC>>")
-    compare_tables("ABCD&|&") # ABC|BD|&&
-    # compare_tables("ABCD|||")
-
-    
-    # print(conjunctive_normal_form("AB|C|D|"))
-    # ABCD|||
-    # print(conjunctive_normal_form("AB&C&D&"))
-    # ABCD&&&
-    # print(conjunctive_normal_form("AB&!C!|"))
-    # A!B!C!||
-    # print(conjunctive_normal_form("AB|!C!&"))
-    # A!B!C!&&
-    # print(conjunctive_normal_form("ABC>>"))
+    # compare_tables("ABCD&|&") # ABC|BD|&&
+    # compare_tables("AB|C|D|") # ABCD|||
+    # compare_tables("AB&C&D&") # ABCD&&&   
+    # compare_tables("AB&!C!|") # A!B!C!||
+    # compare_tables("AB|!C!&") # A!B!C!&&
