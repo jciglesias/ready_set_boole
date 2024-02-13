@@ -5,8 +5,8 @@ truth = {
     "|": lambda a, b: a | b,
     "=": lambda a, b: a == b,
     "^": lambda a, b: a ^ b,
-    ">": lambda a, b: a != True or b == True,
-    "!": lambda a: {} ,
+    ">": lambda a, b: set({}) | b,
+    "!": lambda a: set({}) ,
 }
 
 def parsing(variables: list):
@@ -23,8 +23,8 @@ def eval_set(formula: str, sets: list) -> list:
         stack = []
         for elem in formula:
             if elem in ascii_uppercase:
-                stack.append(var[elem])
-            elif elem in "&|>=":
+                stack.append(set(var[elem]))
+            elif elem in "&|>=^":
                 try:
                     right = stack.pop()
                     left = stack.pop()
@@ -35,5 +35,6 @@ def eval_set(formula: str, sets: list) -> list:
                 stack.append(truth[elem](stack.pop()))
             else:
                 exit(f"Bad character in formula: {elem}")
-        return stack.pop()
+        ret: set = stack.pop()
+        return ret if len(ret) else {}
     exit("Formula must be a string and sets a list")
